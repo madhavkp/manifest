@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gamutkart-deployment
+  labels:
+    env: prod 
+    version: v1.2.3
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: gamutkart-pod-app
+  template:
+    metadata:
+      name: gamutkart-pod
+      labels:
+        app: gamutkart-pod-app
+    spec:
+      containers:
+      - name: gamutkart-c
+        image: madhavkp/travelling-gcp-img
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 64Mi
+            cpu: 250m
+          limits: 
+            memory: 128Mi
+            cpu: 500m
+
+        command: ["/bin/sh"]
+        args: ["-c", "/root/apache-tomcat-9.0.83/bin/startup.sh; while true; do sleep 1; done;"]
+
+
+
+
+
+  
+
