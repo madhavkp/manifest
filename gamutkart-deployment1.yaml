@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: my-deployment
+  labels: 
+    env: prod
+    version: v1.2.3
+spec: 
+  replicas: 4
+  selector:
+    matchLabels:
+      app: my-gamu-pod-app
+  template:
+    metadata: 
+      name: my-gamu-pod
+      labels:
+        app: my-gamu-pod-app
+    spec:
+      containers:
+      - name: gamu-container
+        image: madhavkp/gam7-gcp-k8s-img
+        ports:
+        - containerPort: 8080
+        command: ["/bin/sh"]
+        args: ["-c","/root/apache-tomcat-9.0.85/bin/startup.sh; while true; do sleep 1; done;"]
